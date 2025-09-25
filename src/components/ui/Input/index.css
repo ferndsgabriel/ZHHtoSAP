@@ -1,0 +1,24 @@
+#inputContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#inputLabel{
+    color: black;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+#inputComponent:focus{
+    border:solid 2px black
+}
+
+#inputComponent{
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 12px 8px;
+    border-radius: 5px;
+}
+
