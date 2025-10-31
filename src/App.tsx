@@ -12,7 +12,8 @@ interface brZhh {
   "OldArticle": any;
   "Type": any;
   "IsCalibrated": any;
-  "Description": any;
+  "DescriptionBr": any;
+  "DescriptionEn": any;
   "Items":any;
   "NCM": any;
   "IsKit": any;
@@ -37,7 +38,7 @@ interface sapTemplate{
   SAPdata:any;
   RleaseGlobal:any;
   DescriptionEn:any;
-  DescriptionPt:any;
+  DescriptionBr:any;
   SAPMaterial:any;
   OldERP:any;
   MaterialComponents:any;
@@ -83,7 +84,8 @@ function App() {
     OldArticle:'',
     Type:'',
     IsCalibrated:'',
-    Description:'',
+    DescriptionBr:'',
+    DescriptionEn:'',
     Items:'',
     NCM:'',
     IsKit:'',
@@ -111,7 +113,6 @@ function App() {
   const [length, setLength] = useState(0);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
-  const [descriptionEn, setDescriptionEn] = useState('');
   const tdRef = useRef<HTMLTableCellElement>(null);
   
   useEffect(() => {
@@ -162,25 +163,26 @@ function App() {
       OldArticle:lines[1] || '',
       Type:lines[2] || '',
       IsCalibrated:lines[3] || '',
-      Description:lines[4] || '',
-      Items:lines[5] || '',
-      NCM:lines[6] || '',
-      IsKit:lines[7] || '',
-      Supplier:lines[8] || '',
-      BasePriceFromItems:lines[9] || '',
-      PurchasePrice:lines[10] || '',
-      RdServicePrice:lines[11] || '',
-      PriceList:lines[12] || '',
-      Volume:lines[13] || '',
-      GrossWeight:lines[14] || '',
-      NetWeight:lines[15] || '',
-      Item1:lines[16] || '',
-      Price1:lines[17] || '',
-      PuchasePrice1:lines[18] || '',
-      Qtd1:lines[19] || '',
-      Volume1:lines[20] || '',
-      GrossWeight1:lines[21] || '',
-      NetWeight1:lines[22] || ''
+      DescriptionBr:lines[4] || '',
+      DescriptionEn:lines[5] || '',
+      Items:lines[6] || '',
+      NCM:lines[7] || '',
+      IsKit:lines[8] || '',
+      Supplier:lines[9] || '',
+      BasePriceFromItems:lines[10] || '',
+      PurchasePrice:lines[11] || '',
+      RdServicePrice:lines[12] || '',
+      PriceList:lines[13] || '',
+      Volume:lines[14] || '',
+      GrossWeight:lines[15] || '',
+      NetWeight:lines[16] || '',
+      Item1:lines[17] || '',
+      Price1:lines[18] || '',
+      PuchasePrice1:lines[19] || '',
+      Qtd1:lines[20] || '',
+      Volume1:lines[21] || '',
+      GrossWeight1:lines[22] || '',
+      NetWeight1:lines[23] || ''
 
     });
   };
@@ -254,8 +256,8 @@ function App() {
           const mtd: sapTemplate = {
             SAPdata: example,
             RleaseGlobal: 'no',
-            DescriptionEn: `${zhh.Article}- ${descriptionEn}`,
-            DescriptionPt: zhh.Description,
+            DescriptionEn: zhh.DescriptionEn,
+            DescriptionBr: zhh.DescriptionBr,
             SAPMaterial: zhh.Article,
             OldERP: '',
             MaterialComponents: item,
@@ -284,7 +286,7 @@ function App() {
             MRPindicator:"\"-\"",
             ROCP:"\"-\"",
             ReleasedCustomer:"\"-\"",
-            SalesText:zhh.Description.split("-")[1],
+            SalesText:zhh.DescriptionBr.split("-")[1],
             BasicDataText:"\"-\"",
             Warranty:'60 months',
             DiscountGroup:''
@@ -294,8 +296,8 @@ function App() {
           const mtd: sapTemplate = {
             SAPdata: example,
             RleaseGlobal: 'no',
-            DescriptionEn: `${zhh.Article}- ${descriptionEn}`,
-            DescriptionPt: zhh.Description,
+            DescriptionEn: zhh.DescriptionEn,
+            DescriptionBr: zhh.DescriptionBr,
             SAPMaterial: zhh.Article,
             OldERP: '',
             MaterialComponents: item,
@@ -346,7 +348,8 @@ function App() {
       OldArticle:'',
       Type:'',
       IsCalibrated:'',
-      Description:'',
+      DescriptionBr:'',
+      DescriptionEn:'',
       Items:'',
       NCM:'',
       IsKit:'',
@@ -370,7 +373,6 @@ function App() {
     setLength(0);
     setWidth(0);
     setHeight(0);
-    setDescriptionEn('');
     setCurrentSupplier(suppliers[0])
   }
 
@@ -398,7 +400,7 @@ function App() {
         <section id='titleSection'>
           <h1>Conversion from ZHH Plan to SAP Template</h1>
 
-          {zhh.Description == "" && (
+          {zhh.DescriptionBr == "" && (
             <div id='tutorial'>
               <FaAngleDoubleDown/>
               <p>Paste the row from your table</p>
@@ -417,7 +419,8 @@ function App() {
                   <th>OldArticle</th>
                   <th>Type</th>
                   <th>IsCalibrated</th>
-                  <th>Description</th>
+                  <th>DescriptionBr</th>
+                  <th>DescriptionEn</th>
                   <th>Items</th>
                   <th>IsKit</th>
                   <th>Supplier</th>
@@ -452,7 +455,8 @@ function App() {
                     <td>{zhh.OldArticle}</td>
                     <td>{zhh.Type}</td>
                     <td>{zhh.IsCalibrated}</td>
-                    <td>{zhh.Description}</td>
+                    <td>{zhh.DescriptionBr}</td>
+                    <td>{zhh.DescriptionEn}</td>
                     <td>{zhh.Items}</td>
                     <td>{zhh.IsKit}</td>
                     <td>{zhh.Supplier}</td>
@@ -484,7 +488,6 @@ function App() {
                 <Input name='Device Length' value={length} onChange={e => setLength(Number(e.target.value))}/>
                 <Input name='Device Width' value={width} onChange={e => setWidth(Number(e.target.value))}/>
                 <Input name='Device Height' value={height} onChange={e => setHeight(Number(e.target.value))}/>
-                <Input name='Description EN' value={descriptionEn} onChange={e => setDescriptionEn((e.target.value))}/>
               </article>
 
               <div id='suppliersList'>
@@ -561,7 +564,7 @@ function App() {
                       <td>{item.SAPdata}</td>
                       <td>{item.RleaseGlobal}</td>
                       <td>{item.DescriptionEn}</td>
-                      <td>{item.DescriptionPt}</td>
+                      <td>{item.DescriptionBr}</td>
                       <td>{item.SAPMaterial}</td>
                       <td>{item.OldERP}</td>
                       <td>{item.MaterialComponents}</td>
