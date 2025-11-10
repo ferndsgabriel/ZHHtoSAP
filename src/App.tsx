@@ -32,6 +32,9 @@ interface brZhh {
   "Volume1": any;
   "GrossWeight1": any;
   "NetWeight1": any;
+  "DeviceLength"?: any;
+  "DeviceWidth"?: any;
+  "DeviceHeight"?: any;
 }
 
 interface sapTemplate{
@@ -103,16 +106,14 @@ function App() {
     Qtd1:'',
     Volume1:'',
     GrossWeight1:'',
-    NetWeight1:''
+    NetWeight1:'',
+    DeviceLength:'',
+    DeviceWidth:'',
+    DeviceHeight:''
   });
 
   const [sap, setSap] = useState<sapTemplate[] | null> (null);
-  
   const [example, setExample] = useState(0);
-  const [itemQty, setItemQty] = useState(1);
-  const [length, setLength] = useState(0);
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
   const tdRef = useRef<HTMLTableCellElement>(null);
   
   useEffect(() => {
@@ -182,8 +183,10 @@ function App() {
       Qtd1:lines[20] || '',
       Volume1:lines[21] || '',
       GrossWeight1:lines[22] || '',
-      NetWeight1:lines[23] || ''
-
+      NetWeight1:lines[23] || '',
+      DeviceLength:lines[24] || '',
+      DeviceWidth:lines[25] || '',
+      DeviceHeight:lines[26] || ''
     });
   };
 
@@ -236,6 +239,15 @@ function App() {
     }
   }
 
+
+  const numberToInt = (num: any) => {
+    const value = Number(num);
+    if (isNaN(value)) return 0; 
+    const tenPercent = value + value * 0.1;
+    return Math.round(tenPercent);
+  };
+
+
   const generateSAPtemplate = (e:FormEvent) => {
     
     e.preventDefault();
@@ -261,13 +273,13 @@ function App() {
             SAPMaterial: zhh.Article,
             OldERP: '',
             MaterialComponents: item,
-            QuantityComponents: itemQty > 0 ? itemQty : 1,
+            QuantityComponents: zhh.Qtd1,
             Certificate: zhh.IsCalibrated === 'y' || zhh.IsCalibrated === 'Y' ? 'YES' : 'NO',
             Measure: 'PC',
             Weight: zhh.NetWeight1,
-            Length: length < 1 ? "\"-\"" : length,
-            Width: width < 1 ? "\"-\"" : width,
-            Height: height < 1 ? "\"-\"" : height,
+            Length: zhh.DeviceLength > 0 ? numberToInt(zhh.DeviceLength) : "\"-\"",
+            Width: zhh.DeviceWidth > 0 ? numberToInt(zhh.DeviceWidth) : "\"-\"" ,
+            Height: zhh.DeviceHeight > 0 ? numberToInt(zhh.DeviceHeight) : "\"-\"" ,
             IFMlabel: "YES - LABEL FROM SUPPLIER",
             CountryOrigin: 'BR',
             NCM: zhh.NCM,
@@ -367,12 +379,12 @@ function App() {
       Qtd1:'',
       Volume1:'',
       GrossWeight1:'',
-      NetWeight1:''
+      NetWeight1:'',
+      DeviceLength:0,
+      DeviceWidth:0,
+      DeviceHeight:0
     });
     setExample(0);
-    setLength(0);
-    setWidth(0);
-    setHeight(0);
     setCurrentSupplier(suppliers[0])
   }
 
@@ -438,9 +450,12 @@ function App() {
                   <th>Volume 1</th>
                   <th>GrossWeight 1</th>
                   <th>NetWeight 1</th>
+                  <th>Device Length</th>
+                  <th>Device Width</th>
+                  <th>Device Height</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='brBody'>
                 {zhh && 
                   <tr>
 
@@ -474,6 +489,9 @@ function App() {
                     <td>{zhh.Volume1}</td>
                     <td>{zhh.GrossWeight1}</td>
                     <td>{zhh.NetWeight1}</td>
+                    <td>{zhh.DeviceLength}</td>
+                    <td>{zhh.DeviceWidth}</td>
+                    <td>{zhh.DeviceHeight}</td>
                   </tr>
                 }
               </tbody>
@@ -484,10 +502,6 @@ function App() {
             <form id='formInput' onSubmit={generateSAPtemplate}>
               <article id='inputsArea'>
                 <Input name='ZHH Example' value={example} onChange={e => setExample(Number(e.target.value))}/>
-                <Input name='Device Qty' value={itemQty} onChange={e => setItemQty(Number(e.target.value))}/>
-                <Input name='Device Length' value={length} onChange={e => setLength(Number(e.target.value))}/>
-                <Input name='Device Width' value={width} onChange={e => setWidth(Number(e.target.value))}/>
-                <Input name='Device Height' value={height} onChange={e => setHeight(Number(e.target.value))}/>
               </article>
 
               <div id='suppliersList'>

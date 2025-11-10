@@ -74,9 +74,17 @@
   color:black;
   font-size: 14px;
 }
+.brBody tr td:nth-child(1){
+  border:2px solid black;
+}
 
+.brBody tr td:nth-child(1):focus{
+  padding: 10px;
+  border:2px solid red;
+}
 .brTable, th, td{
   padding: 10px;
+  outline: none;
 }
 
 #formInput{
