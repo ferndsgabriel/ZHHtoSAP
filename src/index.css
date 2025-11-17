@@ -16,8 +16,10 @@ html, body{
   transition: all ease-in 0.2s;
 }
 
-button{
+button, input{
   cursor: pointer;
+  border:none;
+  outline: none;
 }
 
 button:not(:enabled){
