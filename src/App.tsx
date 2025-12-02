@@ -198,6 +198,9 @@ function App() {
   const generateSAPtemplate = (): sapTemplate[] => {
     const sapList: sapTemplate[] = [];
 
+    if (!zhh.length) return [];
+
+
     zhh.forEach((item, index) => {
       const isKitComponents = String(item.Items || "").split("-").filter(Boolean);
       
@@ -212,7 +215,7 @@ function App() {
         DescriptionBr: item.DescriptionBr,
         SAPMaterial: item.Article,
         OldERP: '',
-        MaterialComponents: item.Article,
+        MaterialComponents: item.Item1,
         QuantityComponents: parseInt(item.Qtd1 || '0') || 1, 
         Certificate: item.IsCalibrated.toLowerCase() === 'y' ? 'YES' : 'NO', 
         Measure: 'PC',
@@ -245,45 +248,47 @@ function App() {
       });
 
       if ((item.IsKit.toLowerCase() === 'y') && isKitComponents.length > 0) {
-        isKitComponents.forEach((kitItem) => {
-          sapList.push({
-            SAPdata: index === 0 ? example : example + index, 
-            RleaseGlobal: 'no',
-            DescriptionEn: item.DescriptionEn, 
-            DescriptionBr: item.DescriptionBr,
-            SAPMaterial: item.Article, 
-            OldERP: '',
-            MaterialComponents: kitItem.trim(),
-            QuantityComponents: 1, 
-            Certificate: 'NO',
-            Measure: 'PC',
-            Weight: "\"-\"",
-            Length: "\"-\"",
-            Width: "\"-\"",
-            Height: "\"-\"",
-            IFMlabel: "YES - LABEL FROM SUPPLIER",
-            CountryOrigin: 'BR',
-            NCM: "\"-\"", 
-            Supplier:"\"-\"",
-            SAPsupplier:0, 
-            DeliveryTime: 0, 
-            TaxCode: 0, 
-            PuchasePrice:"\"-\"",
-            Currency:"BRL",
-            StandardPrice:"",
-            CommodityCode:"",
-            BaseSalesPrice:"\"-\"",
-            CountryCurrency:"BRL",
-            SSE:"NO",
-            MaterialGroup:null, 
-            MRPindicator:"\"-\"",
-            ROCP:"\"-\"",
-            ReleasedCustomer:"\"-\"",
-            SalesText:"\"-\"", 
-            BasicDataText:"\"-\"",
-            Warranty:'60 months',
-            DiscountGroup:''
-          })
+        isKitComponents.forEach((kitItem, indexKit) => {
+          if (indexKit > 0) {
+            sapList.push({
+              SAPdata: index === 0 ? example : example + index, 
+              RleaseGlobal: 'no',
+              DescriptionEn: item.DescriptionEn, 
+              DescriptionBr: item.DescriptionBr,
+              SAPMaterial: item.Article, 
+              OldERP: '',
+              MaterialComponents: kitItem.trim(),
+              QuantityComponents: 1, 
+              Certificate: 'NO',
+              Measure: 'PC',
+              Weight: "\"-\"",
+              Length: "\"-\"",
+              Width: "\"-\"",
+              Height: "\"-\"",
+              IFMlabel: "YES - LABEL FROM SUPPLIER",
+              CountryOrigin: 'BR',
+              NCM: "\"-\"", 
+              Supplier:"\"-\"",
+              SAPsupplier:0, 
+              DeliveryTime: 0, 
+              TaxCode: 0, 
+              PuchasePrice:"\"-\"",
+              Currency:"BRL",
+              StandardPrice:"",
+              CommodityCode:"",
+              BaseSalesPrice:"\"-\"",
+              CountryCurrency:"BRL",
+              SSE:"NO",
+              MaterialGroup:null, 
+              MRPindicator:"\"-\"",
+              ROCP:"\"-\"",
+              ReleasedCustomer:"\"-\"",
+              SalesText:"\"-\"", 
+              BasicDataText:"\"-\"",
+              Warranty:'60 months',
+              DiscountGroup:''
+            })
+          }
         })
       }
     });
