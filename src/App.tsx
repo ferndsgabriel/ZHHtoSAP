@@ -10,13 +10,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 interface brZhh {
   "Article": string;
-  "OldArticle": string;
   "Type": string;
   "IsCalibrated": string;
   "DescriptionBr": string;
   "DescriptionEn": string;
   "Items": string;
+  "NCMOld": string;
   "NCM": string;
+  "Divergence": string;
   "IsKit": string;
   "Supplier": string;
   "BasePriceFromItems": string;
@@ -83,7 +84,6 @@ interface sharePoint {
   ProductManagement:string;
   Items:string;
   Description:string;
-  Old:string;
 }
 
 interface suppliersProps{
@@ -103,10 +103,34 @@ const suppliers: suppliersProps[] = [
 
 // Estado inicial vazio para ZHH
 const initialZhhState: brZhh[] = [{
-  Article:'', OldArticle:'', Type:'', IsCalibrated:'', DescriptionBr:'', DescriptionEn:'', Items:'', NCM:'', IsKit:'', Supplier:'',
-  BasePriceFromItems:'', PurchasePrice:'', RdServicePrice:'', PriceList:'', Volume:'', GrossWeight:'', NetWeight:'',
-  Item1:'', Price1:'', PuchasePrice1:'', Qtd1:'', Volume1:'', GrossWeight1:'', NetWeight1:'',
-  DeviceLength:'', DeviceWidth:'', DeviceHeight:''
+  Article: '',
+  Type: '',
+  IsCalibrated: '',
+  DescriptionBr: '',
+  DescriptionEn: '',
+  Items: '',
+  NCMOld: '',
+  NCM: '',
+  Divergence: '',
+  IsKit: '',
+  Supplier: '',
+  BasePriceFromItems: '',
+  PurchasePrice: '',
+  RdServicePrice: '',
+  PriceList: '',
+  Volume: '',
+  GrossWeight: '',
+  NetWeight: '',
+  Item1: '',
+  Price1: '',
+  PuchasePrice1: '',
+  Qtd1: '',
+  Volume1: '',
+  GrossWeight1: '',
+  NetWeight1: '',
+  DeviceLength: '', 
+  DeviceWidth: '',  
+  DeviceHeight: ''
 }];
 
 function App() {
@@ -134,16 +158,36 @@ function App() {
     
     let zhhList:brZhh[] = [];
 
-    rows.forEach((row) => {
+    rows.forEach((row, ) => {
       zhhList.push({
-        Article: row[0] || '', OldArticle: row[1] || '', Type: row[2] || '',
-        IsCalibrated: row[3] || '', DescriptionBr: row[4] || '', DescriptionEn: row[5] || '',
-        Items: row[6] || '', NCM: row[7] || '', IsKit: row[8] || '', Supplier: row[9] || '',
-        BasePriceFromItems: row[10] || '', PurchasePrice: row[11] || '', RdServicePrice: row[12] || '',
-        PriceList: row[13] || '', Volume: row[14] || '', GrossWeight: row[15] || '', NetWeight: row[16] || '',
-        Item1: row[17] || '', Price1: row[18] || '', PuchasePrice1: row[19] || '', Qtd1: row[20] || '',  
-        Volume1: row[21] || '', GrossWeight1: row[22] || '', NetWeight1: row[23] || '',
-        DeviceLength: row[24] || '', DeviceWidth: row[25] || '', DeviceHeight: row[26] || ''
+      Article: row[0] || '',
+      Type: row[1] || '',
+      IsCalibrated: row[2] || '',
+      DescriptionBr: row[3] || '',
+      DescriptionEn: row[4] || '',
+      Items: row[5] || '',
+      NCMOld: row[6] || '',
+      NCM: row[7] || '',
+      Divergence: row[8] || '',
+      IsKit: row[9] || '',
+      Supplier: row[10] || '',
+      BasePriceFromItems: row[11] || '',
+      PurchasePrice: row[12] || '',
+      RdServicePrice: row[13] || '',
+      PriceList: row[14] || '',
+      Volume: row[15] || '',
+      GrossWeight: row[16] || '',
+      NetWeight: row[17] || '',
+      Item1: row[18] || '',
+      Price1: row[19] || '',
+      PuchasePrice1: row[20] || '',
+      Qtd1: row[21] || '',
+      Volume1: row[22] || '',
+      GrossWeight1: row[23] || '',
+      NetWeight1: row[24] || '',
+      DeviceLength: row[25] || '', 
+      DeviceWidth: row[26] || '',  
+      DeviceHeight: row[27] || '', 
       });
     });
     
@@ -321,8 +365,7 @@ function App() {
         ItemType:item.Type,
         ProductManagement:verifyProductManagementType(item.IsCalibrated, item.IsKit),
         Items:item.Items,
-        Description: item.DescriptionBr.includes('-') ? item.DescriptionBr.split("-")[1]?.trim() || '' : item.DescriptionBr.trim(),
-        Old:item.OldArticle
+        Description: item.DescriptionBr.includes('-') ? item.DescriptionBr.split("-")[1]?.trim() || '' : item.DescriptionBr.trim()
       })
     });
 
@@ -423,13 +466,34 @@ function App() {
             <table className='brTable'>
               <thead className='brThead'>
                 <tr>
-                  <th>Article</th><th>OldArticle</th><th>Type</th><th>IsCalibrated</th>
-                  <th>DescriptionBr</th><th>DescriptionEn</th><th>Items</th><th>IsKit</th>
-                  <th>Supplier</th><th>BasePriceFromItems</th><th>PurchasePrice</th>
-                  <th>3rdServicePrice</th><th>PriceList</th><th>Volume</th><th>GrossWeight</th>
-                  <th>NetWeight</th><th>Item 1</th><th>Price 1</th><th>PuchasePrice 1</th>
-                  <th>Qty 1</th><th>Volume 1</th><th>GrossWeight 1</th><th>NetWeight 1</th>
-                  <th>Device Length</th><th>Device Width</th><th>Device Height</th>
+                  <th>Article</th> 
+                  <th>Type</th> 
+                  <th>IsCalibrated</th> 
+                  <th>DescriptionBr</th> 
+                  <th>DescriptionEn</th> 
+                  <th>Items</th> 
+                  <th>NCMOld</th> 
+                  <th>NCM</th> 
+                  <th>Divergence</th> 
+                  <th>IsKit</th> 
+                  <th>Supplier</th> 
+                  <th>BasePriceFromItems</th> 
+                  <th>PurchasePrice</th> 
+                  <th>RdServicePrice</th> 
+                  <th>PriceList</th> 
+                  <th>Volume</th> 
+                  <th>GrossWeight</th> 
+                  <th>NetWeight</th> 
+                  <th>Item1</th> 
+                  <th>Price1</th> 
+                  <th>PuchasePrice1</th> 
+                  <th>Qtd1</th> 
+                  <th>Volume1</th> 
+                  <th>GrossWeight1</th> 
+                  <th>NetWeight1</th> 
+                  <th>DeviceLength</th>  
+                  <th>DeviceWidth</th>   
+                  <th>DeviceHeight</th>  
                 </tr>
               </thead>
               <tbody className='brBody'>
@@ -447,31 +511,33 @@ function App() {
                       ):(
                         <td>{item.Article}</td>
                       )}
-                      <td>{item.OldArticle}</td>
-                      <td>{item.Type}</td>
-                      <td>{item.IsCalibrated}</td>
-                      <td>{item.DescriptionBr}</td>
-                      <td>{item.DescriptionEn}</td>
-                      <td>{item.Items}</td>
-                      <td>{item.IsKit}</td>
-                      <td>{item.Supplier}</td>
-                      <td>{item.BasePriceFromItems}</td>
-                      <td>{item.PurchasePrice}</td>
-                      <td>{item.RdServicePrice}</td>
-                      <td>{item.PriceList}</td>
-                      <td>{item.Volume}</td>
-                      <td>{item.GrossWeight}</td>
-                      <td>{item.NetWeight}</td>
-                      <td>{item.Item1}</td>
-                      <td>{item.Price1}</td>
-                      <td>{item.PuchasePrice1}</td>
-                      <td>{item.Qtd1}</td>
-                      <td>{item.Volume1}</td>
-                      <td>{item.GrossWeight1}</td>
-                      <td>{item.NetWeight1}</td>
-                      <td>{item.DeviceLength}</td>
-                      <td>{item.DeviceWidth}</td>
-                      <td>{item.DeviceHeight}</td>
+                        <th>{item.Type}</th> 
+                        <th>{item.IsCalibrated}</th> 
+                        <th>{item.DescriptionBr}</th> 
+                        <th>{item.DescriptionEn}</th> 
+                        <th>{item.Items}</th> 
+                        <th>{item.NCMOld}</th> 
+                        <th>{item.NCM}</th> 
+                        <th>{item.Divergence}</th> 
+                        <th>{item.IsKit}</th> 
+                        <th>{item.Supplier}</th> 
+                        <th>{item.BasePriceFromItems}</th> 
+                        <th>{item.PurchasePrice}</th> 
+                        <th>{item.RdServicePrice}</th> 
+                        <th>{item.PriceList}</th> 
+                        <th>{item.Volume}</th> 
+                        <th>{item.GrossWeight}</th> 
+                        <th>{item.NetWeight}</th> 
+                        <th>{item.Item1}</th> 
+                        <th>{item.Price1}</th> 
+                        <th>{item.PuchasePrice1}</th> 
+                        <th>{item.Qtd1}</th> 
+                        <th>{item.Volume1}</th> 
+                        <th>{item.GrossWeight1}</th> 
+                        <th>{item.NetWeight1}</th> 
+                        <th>{item.DeviceLength}</th>  
+                        <th>{item.DeviceWidth}</th>   
+                        <th>{item.DeviceHeight}</th>
                     </tr>
                   )
                 })}
